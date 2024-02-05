@@ -1,7 +1,7 @@
 import urllib.request
 import json
 
-from script.request_download import download_file_request
+from script.request_download import download_file
 
 
 def insta_download(url, id_chat):
@@ -10,7 +10,7 @@ def insta_download(url, id_chat):
             data = json.load(url)
             if data['status'] == "success":
                 url_link = data['data']['videoUrl']
-                download_file_request(url_link, f'db/video/{id_chat}.mp4') # bug!
+                download_file(url_link, f'db/video/{id_chat}.mp4') # bug!
                 return True
             return False
     except Exception as e:
