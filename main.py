@@ -52,28 +52,27 @@ def text_message(message):
         if insta_download(txt[0], message.chat.id):
             send_videomsg(bot, message.chat.id, msg.message_id)
         else:
-            bot.send_message(message.chat.id, "Ошибка, возможно вы отправили ссылку не на пост или рилс!"
-                                              ""
-                                              "\n\n||Либо сервер не смог обработать запрос||",
-                             parse_mode='MarkdownV2')
+            bot.delete_message(message.chat.id, msg.message_id)
+            bot.send_message(message.chat.id, "Ошибка, возможно вы отправили ссылку не на пост или рилс!\n "
+                                              "\nЛибо сервер не смог обработать запрос")
     elif "tiktok.com" in txt[0]:
         msg = bot.send_message(message.chat.id, "Началась загрузка, примерное время ожидания 20 секунд...")
         if tiktok_download(txt[0], message.chat.id):
             send_videomsg(bot, message.chat.id, msg.message_id)
         else:
+            bot.delete_message(message.chat.id, msg.message_id)
             bot.send_message(message.chat.id, "Ошибка, возможно вы отправили ссылку не на тикток!"
                                               ""
-                                              "\n\n||Либо сервер не смог обработать запрос||",
-                             parse_mode='MarkdownV2')
+                                              "\n\nЛибо сервер не смог обработать запрос")
     elif "pinterest.com/pin/" in txt[0] or "pin.it" in txt[0]:
         msg = bot.send_message(message.chat.id, "Началась загрузка, примерное время ожидания 20 секунд...")
         if pint_download(txt[0], message.chat.id):
             send_videomsg(bot, message.chat.id, msg.message_id)
         else:
+            bot.delete_message(message.chat.id, msg.message_id)
             bot.send_message(message.chat.id, "Ошибка, возможно вы отправили ссылку не на пин!"
                                               ""
-                                              "\n\n||Либо сервер не смог обработать запрос||",
-                             parse_mode='MarkdownV2')
+                                              "\n\nЛибо сервер не смог обработать запрос")
 
 
 def telegram_polling():
