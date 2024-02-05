@@ -5,6 +5,7 @@ import traceback
 
 from script.instagram import insta_download
 from script.pinterest import pint_download
+from script.send_video import send_videomsg
 from script.tiktok import tiktok_download
 
 try:
@@ -49,10 +50,7 @@ def text_message(message):
     if "www.instagram.com/reels" in txt[0] or "www.instagram.com/p" in txt[0]:
         msg = bot.send_message(message.chat.id, "Началась загрузка, примерное время ожидания 20 секунд...")
         if insta_download(txt[0], message.chat.id):
-            video = open(f'db/video/{message.chat.id}.mp4', 'rb')
-            bot.delete_message(message.chat.id, msg.message_id)
-            bot.send_video(message.chat.id, video, caption="Бот по загрузке видео --> @pizdza_save_bot")
-            os.remove(f"db/video/{message.chat.id}.mp4")
+            send_videomsg(bot, message.chat.id, msg.message_id)
         else:
             bot.send_message(message.chat.id, "Ошибка, возможно вы отправили ссылку не на пост или рилс!"
                                               ""
@@ -61,10 +59,7 @@ def text_message(message):
     elif "tiktok.com" in txt[0]:
         msg = bot.send_message(message.chat.id, "Началась загрузка, примерное время ожидания 20 секунд...")
         if tiktok_download(txt[0], message.chat.id):
-            video = open(f'db/video/{message.chat.id}.mp4', 'rb')
-            bot.delete_message(message.chat.id, msg.message_id)
-            bot.send_video(message.chat.id, video, caption="Бот по загрузке видео --> @pizdza_save_bot")
-            os.remove(f"db/video/{message.chat.id}.mp4")
+            send_videomsg(bot, message.chat.id, msg.message_id)
         else:
             bot.send_message(message.chat.id, "Ошибка, возможно вы отправили ссылку не на тикток!"
                                               ""
@@ -73,10 +68,7 @@ def text_message(message):
     elif "pinterest.com/pin/" in txt[0] or "pin.it" in txt[0]:
         msg = bot.send_message(message.chat.id, "Началась загрузка, примерное время ожидания 20 секунд...")
         if pint_download(txt[0], message.chat.id):
-            video = open(f'db/video/{message.chat.id}.mp4', 'rb')
-            bot.delete_message(message.chat.id, msg.message_id)
-            bot.send_video(message.chat.id, video, caption="Бот по загрузке видео --> @pizdza_save_bot")
-            os.remove(f"db/video/{message.chat.id}.mp4")
+            send_videomsg(bot, message.chat.id, msg.message_id)
         else:
             bot.send_message(message.chat.id, "Ошибка, возможно вы отправили ссылку не на пин!"
                                               ""
