@@ -1,4 +1,4 @@
-tiktok_downloader~=0.3.5
+tiktok_downloader
 requests~=2.31.0
 bs4~=0.0.2
 beautifulsoup4~=4.12.3

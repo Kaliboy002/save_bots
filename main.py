@@ -45,52 +45,43 @@ def start(message):
 
 @bot.message_handler(content_types=['text'])
 def text_message(message):
-    # Подключение к БД
-    con = sqlite3.connect("db/chats.db")
-    # Создание курсора
-    cur = con.cursor()
-
     txt = message.text.split()
-    flag = cur.execute(f'''SELECT flag FROM id WHERE id = {message.chat.id}''').fetchone()[0]
-
-    if flag == "default":
-        if "www.instagram.com/reels" in txt[0] or "www.instagram.com/p" in txt[0]:
-            msg = bot.send_message(message.chat.id, "Началась загрузка, примерное время ожидания 20 секунд...")
-            if insta_download(txt[0], message.chat.id):
-                video = open(f'db/video/{message.chat.id}.mp4', 'rb')
-                bot.delete_message(message.chat.id, msg.message_id)
-                bot.send_video(message.chat.id, video, caption="Бот по загрузке видео --> @pizdza_save_bot")
-                os.remove(f"db/video/{message.chat.id}.mp4")
-            else:
-                bot.send_message(message.chat.id, "Ошибка, возможно вы отправили ссылку не на пост или рилс!"
-                                                  ""
-                                                  "\n\n||Либо сервер не смог обработать запрос||",
-                                 parse_mode='MarkdownV2')
-        elif "tiktok.com" in txt[0]:
-            msg = bot.send_message(message.chat.id, "Началась загрузка, примерное время ожидания 20 секунд...")
-            if tiktok_download(txt[0], message.chat.id):
-                video = open(f'db/video/{message.chat.id}.mp4', 'rb')
-                bot.delete_message(message.chat.id, msg.message_id)
-                bot.send_video(message.chat.id, video, caption="Бот по загрузке видео --> @pizdza_save_bot")
-                os.remove(f"db/video/{message.chat.id}.mp4")
-            else:
-                bot.send_message(message.chat.id, "Ошибка, возможно вы отправили ссылку не на тикток!"
-                                                  ""
-                                                  "\n\n||Либо сервер не смог обработать запрос||",
-                                 parse_mode='MarkdownV2')
-        elif "pinterest.com/pin/" in txt[0] or "pin.it" in txt[0]:
-            msg = bot.send_message(message.chat.id, "Началась загрузка, примерное время ожидания 20 секунд...")
-            if pint_download(txt[0], message.chat.id):
-                video = open(f'db/video/{message.chat.id}.mp4', 'rb')
-                bot.delete_message(message.chat.id, msg.message_id)
-                bot.send_video(message.chat.id, video, caption="Бот по загрузке видео --> @pizdza_save_bot")
-                os.remove(f"db/video/{message.chat.id}.mp4")
-            else:
-                bot.send_message(message.chat.id, "Ошибка, возможно вы отправили ссылку не на пин!"
-                                                  ""
-                                                  "\n\n||Либо сервер не смог обработать запрос||",
-                                 parse_mode='MarkdownV2')
-    con.close()
+    if "www.instagram.com/reels" in txt[0] or "www.instagram.com/p" in txt[0]:
+        msg = bot.send_message(message.chat.id, "Началась загрузка, примерное время ожидания 20 секунд...")
+        if insta_download(txt[0], message.chat.id):
+            video = open(f'db/video/{message.chat.id}.mp4', 'rb')
+            bot.delete_message(message.chat.id, msg.message_id)
+            bot.send_video(message.chat.id, video, caption="Бот по загрузке видео --> @pizdza_save_bot")
+            os.remove(f"db/video/{message.chat.id}.mp4")
+        else:
+            bot.send_message(message.chat.id, "Ошибка, возможно вы отправили ссылку не на пост или рилс!"
+                                              ""
+                                              "\n\n||Либо сервер не смог обработать запрос||",
+                             parse_mode='MarkdownV2')
+    elif "tiktok.com" in txt[0]:
+        msg = bot.send_message(message.chat.id, "Началась загрузка, примерное время ожидания 20 секунд...")
+        if tiktok_download(txt[0], message.chat.id):
+            video = open(f'db/video/{message.chat.id}.mp4', 'rb')
+            bot.delete_message(message.chat.id, msg.message_id)
+            bot.send_video(message.chat.id, video, caption="Бот по загрузке видео --> @pizdza_save_bot")
+            os.remove(f"db/video/{message.chat.id}.mp4")
+        else:
+            bot.send_message(message.chat.id, "Ошибка, возможно вы отправили ссылку не на тикток!"
+                                              ""
+                                              "\n\n||Либо сервер не смог обработать запрос||",
+                             parse_mode='MarkdownV2')
+    elif "pinterest.com/pin/" in txt[0] or "pin.it" in txt[0]:
+        msg = bot.send_message(message.chat.id, "Началась загрузка, примерное время ожидания 20 секунд...")
+        if pint_download(txt[0], message.chat.id):
+            video = open(f'db/video/{message.chat.id}.mp4', 'rb')
+            bot.delete_message(message.chat.id, msg.message_id)
+            bot.send_video(message.chat.id, video, caption="Бот по загрузке видео --> @pizdza_save_bot")
+            os.remove(f"db/video/{message.chat.id}.mp4")
+        else:
+            bot.send_message(message.chat.id, "Ошибка, возможно вы отправили ссылку не на пин!"
+                                              ""
+                                              "\n\n||Либо сервер не смог обработать запрос||",
+                             parse_mode='MarkdownV2')
 
 
 def telegram_polling():
